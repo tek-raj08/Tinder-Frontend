@@ -7,7 +7,7 @@ import { addUser } from '../utils/userSlice'
 import { useEffect } from 'react'
 import axios from 'axios'
 
-const dashboard = () => {
+const Dashboard = () => {
   const dispath = useDispatch()
   const fetchUser = async() => {
     try{
@@ -30,4 +30,4 @@ const dashboard = () => {
   )
 }
 
-export default dashboard
+export default Dashboard
