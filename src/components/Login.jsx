@@ -2,8 +2,16 @@ import React from "react";
 import { useState } from "react";
 import { Eye,  EyeOff } from "lucide-react";
 import axios from "axios";
+import { addUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
+
+
 
 const Login = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [email, setEmail] = useState("tek@gmail.com");
   const [password, setPassword] = useState("Tek@1234");
 
@@ -17,7 +25,7 @@ const Login = () => {
     e.preventDefault()
 
     try{
-      const response = await axios.post("http://localhost:3000/login", {
+      const response = await axios.post(`${BASE_URL}/login`, {
         emailID: email,
         password
       },
@@ -26,7 +34,11 @@ const Login = () => {
       }
     )
 
-      alert("Login successfull.")
+    dispatch(addUser(response.data.user))
+    alert("Login successfull.")
+    navigate("/")
+    
+
 
     }catch(err){
       console.error(err)
