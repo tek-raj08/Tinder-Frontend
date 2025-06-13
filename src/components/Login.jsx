@@ -36,7 +36,7 @@ const Login = () => {
 
     dispatch(addUser(response.data.user))
     alert("Login successfull.")
-    navigate("/")
+    navigate("/feed")
     
 
 

@@ -4,6 +4,7 @@ import Dashboard from "./pages/dashboard";
 import Login from "./components/Login";
 import {Provider} from "react-redux"
 import appStore from "./utils/appStore";
+import Feed from "./components/Feed";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard/>}>
           <Route path="/login" element={<Login/>} />
-        </Route>
+          <Route path="/feed" element={<Feed/>} />
+          </Route>
       </Routes>
     </Router>
     </Provider>
