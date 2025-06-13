@@ -12,6 +12,7 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [error, setError] = useState("")
   const [email, setEmail] = useState("tek@gmail.com");
   const [password, setPassword] = useState("Tek@1234");
 
@@ -42,8 +43,9 @@ const Login = () => {
 
 
     }catch(err){
+      setError(err?.response?.data?.message || "Something went wrong.")
       console.error(err)
-      console.log("Failed to submit form.")
+     
     }
 
   }
@@ -73,9 +75,9 @@ const Login = () => {
               />
               <div onClick={togglePassword} className="me-2">
               {showPassword ? <Eye/> : <EyeOff/>}
-
               </div>
             </div>
+            <p className="text-red-600 my-2 text-center">{error}</p>
             <div className="justify-end card-actions mt-3.5">
             <button className="btn btn-primary">login</button>
           </div>
