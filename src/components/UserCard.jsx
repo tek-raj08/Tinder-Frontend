@@ -1,30 +1,64 @@
 import React from "react";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { removeFeed } from "../utils/feedSlice";
 
-const UserCard = ({user}) => {
+const UserCard = ({ user }) => {
+  const { firstName, lastName, photoUrl, about, age, gender, _id } = user;
+  // console.log( "f userCard: ",typeof(_id))
+  const dispatch = useDispatch();
+
+  const handleSendRequest = async (status, id) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/request/send/${status}/${id}`,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeFeed(id));
+    } catch (err) {
+      console.error(err);
+    }
+
     
-    const {firstName, lastName, photoUrl, about, age, gender} = user
+  };
+  if (!user)
+    return (
+      <h1 className="font-bold text-2xl flex justify-center items-center">
+        No new users found.
+      </h1>
+    );
+
   return (
     <div className="card bg-base-300 w-86 shadow-sm">
-      <figure>
-        <img
-          src={photoUrl}
-          alt="My photo"
-        />
-      </figure>
+      {photoUrl && (
+        <figure>
+          <img src={photoUrl} alt="My photo" />
+        </figure>
+      )}
       <div className="card-body">
-        <h2 className="card-title">{firstName} {lastName}</h2>
-        {user.gender && <p>
-          Gender: {gender}
-        </p>}
-        {user.age && <p>
-          Age: {age}
-        </p>}
-        {user.about && <p>
-          About: {about}
-        </p>}
-        <div className="card-actions justify-center mt-3">
-            <button className="btn btn-primary">Ignore</button>
-          <button className="btn btn-secondary">Interested</button>
+        {firstName && lastName && (
+          <h2 className="card-title">
+            {firstName} {lastName}
+          </h2>
+        )}
+        {gender && <p>Gender: {gender}</p>}
+        {age && <p>Age: {age}</p>}
+        {about && <p>About: {about}</p>}
+        <div className="card-actions justify-end mt-3">
+          <button
+            className="btn btn-primary"
+            onClick={() => handleSendRequest("ignored", _id)}
+          >
+            Ignore
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => handleSendRequest("interested", _id)}
+          >
+            Interested
+          </button>
         </div>
       </div>
     </div>

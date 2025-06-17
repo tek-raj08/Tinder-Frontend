@@ -5,7 +5,7 @@ import EditProfile from "./EditProfile";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
-  console.log(user);
+  // console.log("F Profile: ",user);
   return (
     user && (
       <div>

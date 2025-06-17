@@ -8,10 +8,10 @@ import { useDispatch } from "react-redux";
 const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
-  const [age, setAge] = useState(user.age);
-  const [gender, setGender] = useState(user.gender);
-  const [about, setAbout] = useState(user.about);
-  const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
+  const [age, setAge] = useState(user.age || "");
+  const [gender, setGender] = useState(user.gender || "");
+  const [about, setAbout] = useState(user.about || "");
+  const [photoUrl, setPhotoUrl] = useState(user.photoUrl || "");
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ const EditProfile = ({ user }) => {
         { withCredentials: true }
       );
 
-      console.log("Post res", res?.data?.saveUser);
+      // console.log("Post res", res?.data?.saveUser);
 
       dispatch(addUser(res?.data?.saveUser));
       setShowToast(true);
@@ -86,8 +86,8 @@ const EditProfile = ({ user }) => {
                     className="input outline-none border-none focus:outline-none"
                   >
                     <option value="">Select Gender</option>
-                    {genderLists.map((gender) => (
-                      <option value={gender}>{gender}</option>
+                    {genderLists.map((gender, index) => (
+                      <option key={index} value={gender}>{gender}</option>
                     ))}
                   </select>
                 </div>
@@ -97,13 +97,13 @@ const EditProfile = ({ user }) => {
                     value={about}
                     onChange={(e) => setAbout(e.target.value)}
                     type="text"
-                    className="input outline-none border-none focus:outline-none h-20"
+                    className="input outline-none border-none focus:outline-none h-20 whitespace-pre-wrap overflow-x-hidden resize-y"
                     placeholder="About"
                     rows={14}
                   ></textarea>
                 </div>
 
-                <legend className="fieldset-legend ">PhtoUrl: </legend>
+                <legend className="fieldset-legend ">Photo URL: </legend>
                 <div className="flex justify-between items-center border border-gray-200 rounded">
                   <input
                     value={photoUrl}
